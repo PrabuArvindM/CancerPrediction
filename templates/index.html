@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cancer Detection Web App</title>
+    <style>
+        /* ===== Basic Setup ===== */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1c92d2, #f2fcfe);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ===== Card ===== */
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            width: 420px;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            color: #7f8c8d;
+            font-weight: normal;
+            margin-bottom: 25px;
+        }
+
+        input[type=file] {
+            margin: 10px 0;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            padding: 10px;
+            width: 100%;
+            background: #ecf6fc;
+            cursor: pointer;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            border: none;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #2980b9, #8e44ad);
+        }
+
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 10px;
+            border: 3px solid #3498db;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .result.cancer {
+            color: #e74c3c;
+        }
+
+        .result.non-cancer {
+            color: #27ae60;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #2c3e50;
+            opacity: 0.8;
+        }
+
+        .footer span {
+            font-weight: bold;
+            color: #1c4f7a;
+        }
+
+        .footer span:hover {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧬 Cancer Detection Web App</h1>
+        <h3>Upload a cell image to predict if it’s Cancer or Non-Cancer</h3>
+
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" required><br>
+            <button type="submit">🔍 Predict</button>
+        </form>
+
+        {% if prediction %}
+            <div class="result {% if 'Cancer' in prediction %}cancer{% else %}non-cancer{% endif %}">
+                {{ prediction }}
+            </div>
+        {% endif %}
+
+        {% if image_path %}
+            <img src="{{ image_path }}" alt="Uploaded Image">
+        {% endif %}
+
+        {% if message %}
+            <p style="color: red; margin-top: 10px;">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>Created with ❤️ by <span>Prabu Arvind M</span></p>
+    </div>
+</body>
+</html>
